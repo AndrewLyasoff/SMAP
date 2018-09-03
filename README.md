@@ -4,3 +4,6 @@ This repository contains Julia and Python notebooks (jupyter) for some of the ex
 Some more mundane task, such as storing an uploading market data, simulating multivariate normal samples with a given covariance matrix, building historams, and such, are implemented as well. For some reason I was not able to get the normalization in the 'histogram' function in Julia to do what is expected, so I wrote my one histogram function, which I call 'hstgram'. This matter requires a follow-up.   
 
 
+Technical note: The archive 'HistoricalQuotes.tar' must be untarred in the same directory in which the notebook that is using it is located (it assumes the existence of a subdirectory called 'HistoricalQuotes'). This can be done from within the notebook by executing the shell command (note the semicolon)
+
+; tar xvf HistoricalQuotes.tar
