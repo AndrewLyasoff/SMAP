@@ -1,31 +1,27 @@
-#=
-MIT license (c) 2019 by Andrew Lyasoff
+# MIT license (c) 2019 by Andrew Lyasoff
 
-Julia 1.1.0.
+# Julia 1.1.0.
 
-The code illustrates some basic operations with large chunks of market data
-(extracted from public sources), such as
-creating histograms from the returns, and other similar operations. 
-=#
+# The code illustrates some basic operations with large chunks of market data
+# (extracted from public sources), such as
+# creating histograms from the returns, and other similar operations.
+
 
 using Dates, JuliaDB
 
-#=
-The historical quotes are downloaded in .csv format from nasdaq.com and are placed
-in the directory "HistoricalQuotes." Before those files can be used here they
-must be modified (slightly) in Excel, LibreOffice Calc, or a text editor (e.g., Emacs):
-there should be no empty line, or a line that contains a time-stamp (all lines except
-the first one must be identically formatted -- this may involve removing the second
-line in the spreadhseet). The data for all stocks can be stored in a single variable
-(note that HistoricalQuotes is the name of the sub-directory that contains all .csv files).
-=#
+# The historical quotes are downloaded in .csv format from nasdaq.com and are placed
+# in the directory "HistoricalQuotes." Before those files can be used here they
+# must be modified (slightly) in Excel, LibreOffice Calc, or a text editor (e.g., Emacs):
+# there should be no empty line, or a line that contains a time-stamp (all lines except
+# the first one must be identically formatted -- this may involve removing the second
+# line in the spreadhseet). The data for all stocks can be stored in a single variable
+# (note that HistoricalQuotes is the name of the sub-directory that contains all .csv files).
+
 
 stocksdata = loadndsparse("HistoricalQuotes"; filenamecol = :ticker, indexcols = [:ticker, :date])
 
-#=
-The same database can now be saved in a special binary format that makes reloading
-at a later time very fast.
-=#
+# The same database can now be saved in a special binary format that makes reloading
+# at a later time very fast.
 save(stocksdata, "stocksdata.jdb")
 @time reloaded_stocksdata = load("stocksdata.jdb")
 
@@ -70,14 +66,13 @@ begin
 end
 
 
-#=
-Now build the histogram from the returns using a custom made 'histogram' function
-(called 'hstgram' to avoid the confucion with the standard 'histogram').
-It takes as an input a single 1-dimensional array of data. The number of bins in
-the histogram is determined automatically by using the Diaconis-Friedman rule.
-The function returns two arrays: the mid-points of the bins and the (unnormalized)
-heights of the bars.
-=#
+# Now build the histogram from the returns using a custom made 'histogram' function
+# (called 'hstgram' to avoid the confucion with the standard 'histogram').
+# It takes as an input a single 1-dimensional array of data. The number of bins in
+# the histogram is determined automatically by using the Diaconis-Friedman rule.
+# The function returns two arrays: the mid-points of the bins and the (unnormalized)
+# heights of the bars.
+
 
 using StatsBase
 
